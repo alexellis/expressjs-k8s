@@ -1,6 +1,8 @@
 # Express.js Docker example
 
-Example for k33g (Philippe Charrière) from GitLab on how to deploy a microservice to [OpenFaaS](https://github.com/openfaas/faas).
+Example to show how to build a microservice with Node.js and Express.js with instructions for: [OpenFaaS](https://github.com/openfaas/faas), Docker and Kubernetes
+
+> Created for k33g (Philippe Charrière) from GitLab
 
 ## Run it with [OpenFaaS](https://github.com/openfaas/faas) and PLONK
 
