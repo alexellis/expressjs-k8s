@@ -2,7 +2,9 @@
 
 Example for k33g (Philippe Charrière) from GitLab on how to deploy a microservice to OpenFaaS.
 
-## Run it with OpenFaaS
+## Run it with OpenFaaS and PLONK
+
+[PLONK](https://skillsmatter.com/skillscasts/14268-serverless-2-0-get-started-with-the-plonk-stack?utm_medium=social&utm_source=twitter&utm_campaign=bafdbc&utm_content=skillscast) = Prometheus Linkerd (optional) OpenFaaS NATS and Kubernetes
 
 ```
 faas-cli deploy
