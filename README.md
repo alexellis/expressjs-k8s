@@ -30,3 +30,14 @@ Access from localhost:8080
 
 * [OpenFaaS docs](https://www.openfaas.com/)
 
+## Templates
+
+With OpenFaaS Templates you don't need to bother with managing Dockerfiles and TCP-port bindings, unless you like that sort of thing, then you can do that too just like we did in this example.
+
+* [Microservice for Node.js with express visible](https://github.com/openfaas-incubator/node10-express-service/)
+* [Function for Node.js with express hidden](https://github.com/openfaas-incubator/node10-express-service/)
+* [Legacy Node template without express](https://github.com/openfaas/templates/tree/master/template/node)
+
+Try one of the templates above with `faas-cli template store ls/pull`.
+
+
