@@ -24,7 +24,7 @@ Access from localhost:8080
 
 ```sh
 kubectl apply -f ./yaml
-kubectl port-forward svc/expressjs 8080:8080 &
+kubectl port-forward deploy/expressjs 8080:8080 &
 
 curl 127.0.0.1:8080
 ```

@@ -9,6 +9,6 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    faas_function: expressjs
+    app: expressjs
   sessionAffinity: None
   type: ClusterIP
