@@ -7,3 +7,9 @@ functions:
     image: alexellis2/service:0.3.0
     annotations:
       com.openfaas.health.http.path: "/health"
+    requests:
+      cpu: 10m
+      memory: 128Mi
+    limits:
+      cpu: 10m
+      memory: 128Mi

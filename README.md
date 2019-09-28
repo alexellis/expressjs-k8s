@@ -20,6 +20,15 @@ docker run --name expressjs -p 8080:8080 -ti alexellis2/service:0.3.0
 
 Access from localhost:8080
 
+## Try it with Kubernetes
+
+```sh
+kubectl apply -f ./yaml
+kubectl port-forward svc/expressjs 8080:8080 &
+
+curl 127.0.0.1:8080
+```
+
 ## The parts
 
 * [Dockerfile](./Dockerfile)
