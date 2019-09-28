@@ -1,0 +1,9 @@
+provider:
+  name: openfaas
+
+functions:
+  expressjs:
+    skip_build: true
+    image: alexellis2/service:0.2.0
+    annotations:
+      com.openfaas.health.http.path: "/health"
