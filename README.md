@@ -1,8 +1,8 @@
 # Express.js Docker example
 
-Example for k33g (Philippe Charrière) from GitLab on how to deploy a microservice to OpenFaaS.
+Example for k33g (Philippe Charrière) from GitLab on how to deploy a microservice to [OpenFaaS](https://github.com/openfaas/faas).
 
-## Run it with OpenFaaS and PLONK
+## Run it with [OpenFaaS](https://github.com/openfaas/faas) and PLONK
 
 [PLONK](https://skillsmatter.com/skillscasts/14268-serverless-2-0-get-started-with-the-plonk-stack?utm_medium=social&utm_source=twitter&utm_campaign=bafdbc&utm_content=skillscast) = Prometheus Linkerd (optional) OpenFaaS NATS and Kubernetes
 
