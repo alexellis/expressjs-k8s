@@ -146,3 +146,11 @@ Other links:
 * [Express.js docs](https://expressjs.com)
 
 * [OpenFaaS docs](https://www.openfaas.com/)
+
+## Contributing via GitHub
+
+Before contributing code, please see the [CONTRIBUTING guide](https://github.com/alexellis/inlets/blob/master/CONTRIBUTING.md). This repo uses the same guide as [inlets.dev](https://inlets.dev/).
+
+Both Issues and PRs have their own templates. Please fill out the whole template.
+
+All commits must be signed-off as part of the [Developer Certificate of Origin (DCO)](https://developercertificate.org)
