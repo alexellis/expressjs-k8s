@@ -5,12 +5,12 @@ functions:
   expressjs:
     lang: dockerfile
     handler: ./
-    image: alexellis2/service:0.3.0
+    image: alexellis2/service:0.3.1
     annotations:
       com.openfaas.health.http.path: "/health"
     requests:
-      cpu: 10m
+      cpu: 50m
       memory: 128Mi
     limits:
-      cpu: 10m
+      cpu: 50m
       memory: 128Mi
