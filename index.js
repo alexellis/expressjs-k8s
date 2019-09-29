@@ -19,7 +19,12 @@ app.post('/health', (req, res) => {
 });
 
 let route = (req, res) => {
-    res.send("Hi, thanks for using PLONK and OpenFaaS");
+    res.type('html')
+    res.send(`<html>
+            <h3>Hi, thanks for using my Express.js lab 👏</h3>
+            <p>If you found it useful, <a href="https://github.com/users/alexellis/sponsorship">become my GitHub Sponsor</a> today 👑</p>
+            <p>Alex</p>
+            </html>`);
 }
 
 app.post('/*', route);

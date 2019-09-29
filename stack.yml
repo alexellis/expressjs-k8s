@@ -3,7 +3,8 @@ provider:
 
 functions:
   expressjs:
-    skip_build: true
+    lang: dockerfile
+    handler: ./
     image: alexellis2/service:0.3.0
     annotations:
       com.openfaas.health.http.path: "/health"

@@ -23,6 +23,14 @@ faas-cli deploy
 
 Access via URL on `faas-cli describe service`
 
+Edit/rebuild:
+
+Edit `image: alexellis2` and replace with your own Docker Hub username, then run:
+
+```sh
+faas-cli up
+```
+
 See also: [stack.yml](./stack.yml) - (optional) - OpenFaaS deployment file
 
 ## Try it with Kubernetes
