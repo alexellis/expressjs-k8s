@@ -1,5 +1,8 @@
 FROM node:10.12.0-alpine as ship
 
+# Copyright (c) Alex Ellis 2019. All rights reserved.
+# Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 RUN addgroup -S app && adduser -S -g app app
 
 RUN apk --no-cache add ca-certificates
