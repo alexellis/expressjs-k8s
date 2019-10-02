@@ -1,6 +1,6 @@
 # Express.js Docker example
 
-Example to show how to build a microservice with Node.js and Express.js with instructions for: Kubernetes with YAML, [OpenFaaS](https://github.com/openfaas/faas), Docker and running locally with `node``
+Example to show how to build a microservice with Node.js and Express.js with instructions for: Kubernetes with YAML, [OpenFaaS](https://github.com/openfaas/faas), Docker and running locally with `node`
 
 ## Clone the repository
 
