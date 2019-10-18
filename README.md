@@ -105,8 +105,8 @@ What is different?
 
 ## Run it with docker
 
-```
-docker run --name expressjs -p 8081:8080 -ti alexellis2/service:0.3.0
+```sh
+docker run --name expressjs -p 8081:8080 -ti alexellis2/service:0.3.2
 ```
 
 Access via http://localhost:8081
