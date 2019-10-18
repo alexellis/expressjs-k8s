@@ -23,6 +23,7 @@ RUN npm i
 
 # Copy outer function handler
 COPY index.js ./
+COPY routes routes
 
 # Set correct permissions to use non root user
 WORKDIR /home/app/

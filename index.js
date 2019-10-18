@@ -5,7 +5,8 @@
 
 const express = require('express')
 const app = express()
- 
+const routes = require ("./routes");
+
 const port = process.env.http_port || 8080;
 
 const bodyParser = require('body-parser')
@@ -14,25 +15,15 @@ app.use(bodyParser.raw());
 app.use(bodyParser.text({ type : "text/*" }));
 app.disable('x-powered-by');       
 
-app.post('/health', (req, res) => {
-    res.send("OK");
-});
+app.get('/health', routes.health);
 
-let route = (req, res) => {
-    res.type('html')
-    res.send(`<html>
-            <h3>Hi, thanks for using my Express.js lab 👏</h3>
-            <p>If you found it useful, <a href="https://github.com/users/alexellis/sponsorship">become my GitHub Sponsor</a> today 👑</p>
-            <p>Alex</p>
-            </html>
-`);
-}
+app.post('/*', routes.main);
+app.get('/*', routes.main);
+app.patch('/*', routes.main);
+app.put('/*', routes.main);
+app.delete('/*', routes.main);
 
-app.post('/*', route);
-app.get('/*', route);
-app.patch('/*', route);
-app.put('/*', route);
-app.delete('/*', route);
+
 
 app.listen(port, () => {
     console.log(`Express.js listening on port: ${port}`)
