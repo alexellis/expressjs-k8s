@@ -8,6 +8,28 @@ module.exports = {
                 </html>
     `);
     },
+    links: (req, res) => {
+        res.type("json")
+        res.send(
+            [
+                {
+                    "name": "github",
+                    "url": "https://github.com/alexellis"
+                },
+                {
+                    "name": "twitter",
+                    "url": "https://twitter.com/alexellisuk"
+                },
+                {
+                    "name": "blog",
+                    "url": "https://blog.alexellis.io"
+                },
+                {
+                    "name": "sponsors",
+                    "url": "https://github.com/users/alexellis/sponsorship"
+                },
+            ])
+    },
     health: (req, res) => {
         res.send("OK");
     }
