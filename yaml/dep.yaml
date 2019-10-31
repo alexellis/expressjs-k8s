@@ -23,14 +23,14 @@ spec:
     spec:
       containers:
       - name: expressjs
-        image: alexellis2/service:0.3.0
+        image: alexellis2/service:0.3.3
         imagePullPolicy: Always
         resources:
           limits:
-            cpu: 10m
+            cpu: 50m
             memory: 128Mi
           requests:
-            cpu: 10m
+            cpu: 50m
             memory: 128Mi
         ports:
         - containerPort: 8080

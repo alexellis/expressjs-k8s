@@ -5,7 +5,7 @@ functions:
   expressjs:
     lang: dockerfile
     handler: ./
-    image: alexellis2/service:0.3.2
+    image: alexellis2/service:0.3.3
     annotations:
       com.openfaas.health.http.path: "/health"
     requests:
