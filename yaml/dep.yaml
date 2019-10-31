@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: expressjs
-        image: alexellis2/service:0.3.3
+        image: alexellis2/service:0.3.4
         imagePullPolicy: Always
         resources:
           limits:

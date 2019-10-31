@@ -9,6 +9,12 @@ git clone https://github.com/alexellis/expressjs-docker \
 && cd expressjs-docker
 ```
 
+## Endpoints
+
+* `/` - serves a HTML page
+* `/links` - serves a JSON response of links
+* `/health` - serves a health endpoint giving 200 OK
+
 ## Try it with Kubernetes
 
 You can first try running the example with Kubernetes, then try it with OpenFaaS to compare the experience. OpenFaaS also adds optional templates and an API to remove boilerplate coding: "look ma', (almost) no YAML!"

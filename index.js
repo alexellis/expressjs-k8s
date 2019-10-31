@@ -16,6 +16,7 @@ app.use(bodyParser.text({ type : "text/*" }));
 app.disable('x-powered-by');       
 
 app.get('/health', routes.health);
+app.get('/links', routes.links);
 
 app.post('/*', routes.main);
 app.get('/*', routes.main);
