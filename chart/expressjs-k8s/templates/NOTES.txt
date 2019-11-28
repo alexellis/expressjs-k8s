@@ -1,0 +1,11 @@
+Check the deployment status:
+
+  kubectl rollout status -n {{.Release.Namespace}} deploy/test-app-expressjs-k8s
+
+Now port-forward the service to test it out:
+
+  kubectl port-forward -n {{.Release.Namespace}} deploy/test-app-expressjs-k8s 8088:8080 &
+
+Try to connect with a browser:
+
+  http://127.0.0.1:8088
