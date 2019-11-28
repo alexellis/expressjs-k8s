@@ -137,6 +137,18 @@ Access via http://localhost:3000
 
 Clean up by hitting Control + C.
 
+## Install via Helm 3
+
+First install [Helm 3](https://helm.sh).
+
+```
+helm repo add expressjs-k8s https://alexellis.github.io/expressjs-k8s/
+
+helm repo update
+
+helm install expressjs-k8s-tester expressjs-k8s/expressjs-k8s
+```
+
 ## The parts
 
 * [Dockerfile](./Dockerfile)
