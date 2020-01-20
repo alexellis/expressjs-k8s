@@ -16,7 +16,7 @@ module.exports = {
     <div id="links">
     </div>
 
-    <p>Copyright Alex Ellis 2019 &reg;</p>
+    <p>Copyright <a href="https://www.alexellis.io/">Alex Ellis 2020 &reg;</a></p>
     <script>
     $(document).ready(function(){
         $.get("/links", function(data, status){
