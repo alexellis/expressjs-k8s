@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "expressjs-k8s.fullname" . }}
+  name: {{ include "kubert.fullname" . }}
   labels:
-    {{- include "expressjs-k8s.labels" . | nindent 4 }}
+    {{- include "kubert.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "expressjs-k8s.selectorLabels" . | nindent 6 }}
+      {{- include "kubert.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "expressjs-k8s.selectorLabels" . | nindent 8 }}
+        {{- include "kubert.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      serviceAccountName: {{ include "expressjs-k8s.serviceAccountName" . }}
+      serviceAccountName: {{ include "kubert.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

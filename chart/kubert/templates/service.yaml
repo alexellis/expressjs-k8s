@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "expressjs-k8s.fullname" . }}
+  name: {{ include "kubert.fullname" . }}
   labels:
-    {{- include "expressjs-k8s.labels" . | nindent 4 }}
+    {{- include "kubert.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "expressjs-k8s.selectorLabels" . | nindent 4 }}
+    {{- include "kubert.selectorLabels" . | nindent 4 }}
