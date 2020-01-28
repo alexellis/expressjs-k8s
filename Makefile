@@ -1,4 +1,4 @@
-APP?=kubic
+APP?=kubert
 PORT?=8000
 PROJECT?=github.com/bmsandoval/kubert
 
