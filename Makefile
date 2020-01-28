@@ -1,6 +1,7 @@
 APP?=kubert
 PORT?=8000
 PROJECT?=github.com/bmsandoval/kubert
+CONTAINER_IMAGE?=docker.io/bmsandoval/${APP}
 
 RELEASE?=0.0.1
 COMMIT?=$(shell git rev-parse --short HEAD)
@@ -8,8 +9,6 @@ BUILD_TIME?=$(shell date -u '+%Y-%m-%d_%H:%M:%S')
 
 GOOS?=linux
 GOARCH?=amd64
-
-CONTAINER_IMAGE?=docker.io/bmsandoval/${APP}
 
 clean:
 		rm -f ${APP}

@@ -3,8 +3,8 @@ FROM scratch
 ENV PORT 8080
 EXPOSE $PORT
 
-COPY kubic /
-CMD ["/kubic"]
+COPY kubert /
+CMD ["/kubert"]
 
 
 
