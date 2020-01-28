@@ -1,5 +1,5 @@
 APP?=kubert
-PORT?=8000
+PORT?=8080
 PROJECT?=github.com/bmsandoval/kubert
 CONTAINER_IMAGE?=docker.io/bmsandoval/${APP}
 
@@ -13,13 +13,13 @@ GOARCH?=amd64
 clean:
 		rm -f ${APP}
 
-build: clean
+compile: clean
 	CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build \
 		-ldflags "-s -w -X ${PROJECT}/version.Release=${RELEASE} \
 		-X ${PROJECT}/version.Commit=${COMMIT} -X ${PROJECT}/version.BuildTime=${BUILD_TIME}" \
 		-o ${APP}
 
-container: build
+container: compile
 	docker build -t $(CONTAINER_IMAGE):$(RELEASE) .
 
 run: container
