@@ -8,7 +8,7 @@ import (
 func Router() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/home", home).Methods("GET")
-	r.HandleFunc("/healthz", health)
-	r.HandleFunc("/readyz", ready)
+	r.HandleFunc("/health", health)
+	r.HandleFunc("/ready", ready)
 	return r
 }
