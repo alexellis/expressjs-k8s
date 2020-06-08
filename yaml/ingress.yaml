@@ -8,7 +8,6 @@ metadata:
   labels:
     app: expressjs
   name: expressjs
-  namespace: openfaas-fn
 spec:
   rules:
   - host: express.example.com
@@ -16,5 +15,5 @@ spec:
       paths:
       - backend:
           serviceName: expressjs
-          servicePort: 8080
+          servicePort: 4000
         path: /
