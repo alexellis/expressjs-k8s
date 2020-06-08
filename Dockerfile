@@ -1,5 +1,4 @@
 FROM node:10.12.0-alpine as ship
-
 # Copyright (c) Alex Ellis 2019. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
@@ -22,8 +21,8 @@ COPY package.json ./
 RUN npm i
 
 # Copy outer function handler
-COPY index.js ./
-COPY routes routes
+COPY app.js ./
+COPY index.html ./
 
 # Set correct permissions to use non root user
 WORKDIR /home/app/
@@ -36,4 +35,6 @@ USER app
 
 RUN touch /tmp/.lock
 
-CMD ["node", "index.js"]
+EXPOSE 4000
+
+CMD ["node", "app.js"]
