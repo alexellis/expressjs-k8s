@@ -1,0 +1,69 @@
+pipeline {
+		agent none
+		stages {
+				stage('Compilar, Publicar, Desplegar Integracion'){
+						agent any
+						stages {
+								stage('Descargar Fuentes') {
+										steps {
+												sh 'printenv'
+												git branch: '2020-devops', credentialsId: 'gitlab_credential', url: 'http://gitlab.insi.sunat.peru/insi.taller/megaproceso-macroproceso-proceso-microservice.git'
+										}
+								}
+								stage('Compilar y Publicar') {
+										steps {
+												sh 'chmod +x build-ci.sh'
+												sh './build-ci.sh'
+										}
+								}
+								stage('Desplegar a Integracion') {
+										environment {
+											 bamboo_deployDesaIpSite3 = "192.168.56.158"
+										}
+										steps {
+											 withCredentials([usernamePassword(credentialsId: 'kubernetes_integracion3', passwordVariable: 'bamboo_deployPasswordDesa3', usernameVariable: 'bamboo_deployUsernameDesa3')]) {
+														sh './gradlew setNewPublishDockerImageIntegracion'
+											 }
+										}
+								}
+						}
+						post {
+								success {
+										stash name: "gradle", includes: "**/*gradle*/**"
+								}
+						}
+				}
+				stage('Promocionar a Calidad') {
+						when {
+								expression {
+										timeout(time: 3, unit: 'DAYS') {
+												input message: 'Promocionar a Calidad?', submitter: "jchata"
+												return true
+										}
+								}
+								beforeAgent true
+						}
+						agent any
+						steps {
+								unstash name: "gradle"
+								sh './gradlew promoteToCalidad'
+						}
+				}
+				stage('Desplegar a Calidad') {
+						when {
+								expression {
+										timeout(time: 3, unit: 'DAYS') {
+												input message: 'Deplegar a Calidad?', submitter: "jchata"
+												return true
+										}
+								}
+								beforeAgent true
+						}
+						agent any
+						steps {
+								unstash name: "gradle"
+								sh './gradlew setNewDockerImageCalidad'
+						}
+				}
+		}
+}
