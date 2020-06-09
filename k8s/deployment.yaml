@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expressjs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: expressjs
+  template:
+    metadata:
+      labels:
+        app: expressjs
+    spec:
+      containers:
+      - name: expressjs
+        image: snahider/expressjs:1.0
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 50m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+        ports:
+        - containerPort: 4000
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 4000
+            scheme: HTTP
+          initialDelaySeconds: 2
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 1
+      terminationGracePeriodSeconds: 30
