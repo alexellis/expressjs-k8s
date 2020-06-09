@@ -16,6 +16,13 @@ pipeline {
 				}
 			}
 		}
+		stage('Publicar Helm') {
+			agent any
+			steps {
+				sh 'Publicar helm'
+			}
+		}
+
 		stage('Desplegar a Integracion') {
 			agent any
 			steps {
