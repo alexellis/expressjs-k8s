@@ -10,7 +10,7 @@ pipeline {
 		stage('Compilar y Publicar Docker') {
 			agent any
 			steps {
-				sh 'docker build -t snahider/expressjs:1.0'
+				sh 'docker build -t snahider/expressjs:1.0 .'
 			}
 		}
 		stage('Desplegar a Integracion') {
