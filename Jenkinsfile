@@ -38,7 +38,7 @@ pipeline {
 		stage('Desplegar a Calidad') {
 			agent any
 			steps {
-				sh 'helm upgrade --install expressjs -f ./chart/expressjs/values-calidad.yaml ./chart/expressjs'
+				sh 'helm upgrade --install expressjs --namespace calidad -f ./chart/expressjs/values-calidad.yaml ./chart/expressjs'
 			}
 		}
 	}
