@@ -10,8 +10,8 @@ pipeline {
 		stage('Compilar y Publicar Docker') {
 			agent any
 			steps {
-				//sh 'docker build -t snahider/expressjs:1.0 .'
-				echo 'build'
+				def chart = readYaml file: 'chart/expressjs/Chart.yaml'
+				sh "docker build -t snahider/expressjs:${chart.version} ."
 			}
 		}
 		stage('Desplegar a Integracion') {
