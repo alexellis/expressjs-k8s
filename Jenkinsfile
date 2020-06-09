@@ -19,10 +19,9 @@ pipeline {
 		stage('Publicar Helm') {
 			agent any
 			steps {
-				sh 'Publicar helm'
+				echo 'Publicar helm'
 			}
 		}
-
 		stage('Desplegar a Integracion') {
 			agent any
 			steps {
