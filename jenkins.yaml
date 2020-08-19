@@ -1,0 +1,143 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+          description: "artifactorycloud"
+          id: "artifactorycloud"
+          password: "{AQAAABAAAAAQblOZ5ZYUpPVPX/KMY8RXCmD7TcAesgGn3hxHudDAgtY=}"
+          scope: GLOBAL
+          username: "angel.nunez.salazar@gmail.com"
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  clouds:
+  - kubernetes:
+      containerCap: 10
+      containerCapStr: "10"
+      jenkinsTunnel: "jenkins-agent:50000"
+      jenkinsUrl: "http://jenkins:8080"
+      maxRequestsPerHost: 32
+      maxRequestsPerHostStr: "32"
+      name: "kubernetes"
+      namespace: "default"
+      podLabels:
+      - key: "jenkins/jenkins-jenkins-slave"
+        value: "true"
+      serverUrl: "https://kubernetes.default"
+      templates:
+      - containers:
+        - args: "cat"
+          command: "/bin/sh -c"
+          image: "docker"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "docker"
+          resourceLimitCpu: "300m"
+          resourceLimitMemory: "500Mi"
+          resourceRequestCpu: "100m"
+          resourceRequestMemory: "300Mi"
+          ttyEnabled: true
+          workingDir: "/home/jenkins/agent"
+        - args: "cat"
+          command: "/bin/sh -c"
+          image: "alpine/helm:3.2.2"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "helm"
+          resourceLimitCpu: "300m"
+          resourceLimitMemory: "500Mi"
+          resourceRequestCpu: "100m"
+          resourceRequestMemory: "300Mi"
+          ttyEnabled: true
+          workingDir: "/home/jenkins/agent"
+        hostNetwork: false
+        label: "jenkins-jenkins-slave "
+        name: "default"
+        nodeUsageMode: "NORMAL"
+        podRetention: "never"
+        serviceAccount: "default"
+        volumes:
+        - hostPathVolume:
+            hostPath: "/var/run/docker.sock"
+            mountPath: "/var/run/docker.sock"
+        - hostPathVolume:
+            hostPath: "/usr/local/bin/helm"
+            mountPath: "/usr/local/bin/helm"
+        yamlMergeStrategy: "override"
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+  disableRememberMe: false
+  disabledAdministrativeMonitors:
+  - "hudson.diagnosis.ReverseProxySetupMonitor"
+  labelAtoms:
+  - name: "jenkins-jenkins-slave"
+  - name: "master"
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  numExecutors: 0
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: true
+  scmCheckoutRetryCount: 0
+  securityRealm: "legacy"
+  slaveAgentPort: 50000
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  sSHD:
+    port: -1
+unclassified:
+  buildDiscarders:
+    configuredBuildDiscarders:
+    - "jobBuildDiscarder"
+  defaultFolderConfiguration:
+    healthMetrics:
+    - worstChildHealthMetric:
+        recursive: true
+  gitSCM:
+    createAccountBasedOnEmail: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "http://jenkins:8080/"
+  mailer:
+    charset: "UTF-8"
+    useSsl: false
+    useTls: false
+  pollSCM:
+    pollingThreadCount: 10
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
