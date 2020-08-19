@@ -2,15 +2,12 @@ pipeline {
 	agent none
 	stages {
 		stage('Descargar Fuentes') {
-			agent any
 			steps {
 				checkout scm
 			}
 		}
 		stage('Compilar y Publicar Docker') {
-			agent {
-				label 'dynamic-slave'
-			}
+			agent any
 			steps {
 				script {
 					def chart = readYaml file: 'chart/expressjs/Chart.yaml'
