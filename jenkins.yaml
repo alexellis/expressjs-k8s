@@ -63,6 +63,18 @@ jenkins:
           resourceRequestMemory: "300Mi"
           ttyEnabled: true
           workingDir: "/home/jenkins/agent"
+        - args: "cat"
+          command: "/bin/sh -c"
+          image: "curlimages/curl:7.71.1"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "curl"
+          ttyEnabled: true
+          workingDir: "/home/jenkins/agent"
         hostNetwork: false
         label: "jenkins-jenkins-slave "
         name: "default"
