@@ -1,5 +1,5 @@
 pipeline {
-	agent any
+	agent none
 	options {
 		skipDefaultCheckout(true)
 	}
@@ -8,11 +8,13 @@ pipeline {
 	}
 	stages {
 		stage('Descargar Fuentes') {
+			agent any
 			steps {
 				checkout scm
 			}
 		}
 		stage('Compilar y Publicar Docker') {
+			agent any
 			steps {
 				container('docker') {
 					script {
@@ -42,12 +44,28 @@ pipeline {
 				}				
 			}
 		}
-		// stage('Desplegar a Integracion') {
-		// 	agent any
-		// 	steps {
-		// 		sh 'helm upgrade --install expressjs ./chart/expressjs'
-		// 	}
-		// }
+		stage('Promocionar a Integración') {
+			when {
+				expression {
+					timeout(time: 3, unit: 'DAYS') {
+						input message: 'Promocionar a Integración?'
+						return true
+					}
+				}
+				beforeAgent true
+			}
+			agent any
+			steps {
+				echo 'Promocionando'
+			}
+		}
+		stage('Desplegar a Integracion') {
+			agent any
+			steps {
+				//sh 'helm upgrade --install expressjs ./chart/expressjs'
+				echo 'Desplegando Integración'
+			}
+		}
 		// stage('Promocionar a Calidad') {
 		// 	when {
 		// 		expression {

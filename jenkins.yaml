@@ -5,7 +5,7 @@ credentials:
       - usernamePassword:
           description: "artifactorycloud"
           id: "artifactorycloud"
-          password: "{AQAAABAAAAAQblOZ5ZYUpPVPX/KMY8RXCmD7TcAesgGn3hxHudDAgtY=}"
+          password: "{AQAAABAAAAAgCrhsO+aBtxFNF3fAjvrEPMH0QNez+jiDfexh3O6NcfBjSTAKs2UiFGlJEIgfnpFO}"
           scope: GLOBAL
           username: "angel.nunez.salazar@gmail.com"
 jenkins:
@@ -65,7 +65,7 @@ jenkins:
           workingDir: "/home/jenkins/agent"
         - args: "cat"
           command: "/bin/sh -c"
-          image: "curlimages/curl:7.71.1"
+          image: "byrnedo/alpine-curl:0.1.8"
           livenessProbe:
             failureThreshold: 0
             initialDelaySeconds: 0
@@ -78,7 +78,7 @@ jenkins:
         hostNetwork: false
         label: "jenkins-jenkins-slave "
         name: "default"
-        nodeUsageMode: "NORMAL"
+        nodeUsageMode: NORMAL
         podRetention: "onFailure"
         serviceAccount: "default"
         volumes:
