@@ -30,15 +30,14 @@ pipeline {
 		stage('Publicar Helm') {
 			steps {
 				container('helm') {
-					script {
-						sh "helm package chart/${COMPONENT_NAME}"
-					}
+					sh "helm package chart/${COMPONENT_NAME}"
 				}
 				container('curl') {
-					withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-						def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
-						sh "curl -u ${USERNAME}:${PASSWORD} -T ${COMPONENT_NAME}-${chart.version}.tgz 'https://angelnunez.jfrog.io/artifactory/helm-local/${COMPONENT_NAME}'"
-
+					script {
+						withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+							def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
+							sh "curl -u ${USERNAME}:${PASSWORD} -T ${COMPONENT_NAME}-${chart.version}.tgz 'https://angelnunez.jfrog.io/artifactory/helm-local/${COMPONENT_NAME}'"
+						}
 					}					
 				}				
 			}
