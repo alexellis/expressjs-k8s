@@ -47,7 +47,7 @@ pipeline {
 				}
 			}
 		}
-		stage('Promocionar a Integración') {
+		stage('Integration Stages'){
 			when {
 				expression {
 					timeout(time: 3, unit: 'DAYS') {
@@ -58,17 +58,29 @@ pipeline {
 				beforeAgent true
 			}
 			agent any
-			steps {
-				echo 'Promocionando'
+			stages{
+				stage('Promocionar a Integración') {
+					steps {
+						echo 'Promocionando'
+					}
+				}
+				stage('Desplegar a Integracion') {
+					steps {
+						container('helm') {
+							script {
+								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+									//def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
+									sh "helm repo add artifactory https://angelnunez.jfrog.io/artifactory/helm --username ${USERNAME} --password ${PASSWORD}"
+									//sh "helm repo update"
+									sh "helm install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version 5.0"
+								}
+							}					
+						}
+					}
+				}
 			}
 		}
-		stage('Desplegar a Integracion') {
-			agent any
-			steps {
-				//sh 'helm upgrade --install expressjs ./chart/expressjs'
-				echo 'Desplegando Integración'
-			}
-		}
+
 		// stage('Promocionar a Calidad') {
 		// 	when {
 		// 		expression {
