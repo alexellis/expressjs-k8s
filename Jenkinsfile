@@ -14,7 +14,14 @@ pipeline {
 				container('docker') {
 					script {
 						def chart = readYaml file: 'chart/expressjs/Chart.yaml'
-						sh "docker build -t snahider/expressjs:${chart.version} ."
+						//sh "docker build -t snahider/expressjs:${chart.version} ."
+						env.REPOSITORY_URI="angelnunez-docker.jfrog.io/pet-clinic"
+						withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+							 sh "docker login --username='${USERNAME}' --password='${PASSWORD}'"
+							 sh "docker build -t ${REPOSITORY_URI}:${chart.version} ."
+							 sh "docker push ${REPOSITORY_URI}:${chart.version}"
+						}
+						//docker tag <IMAGE_ID> angelnunez-docker.jfrog.io/<DOCKER_REPOSITORY>:<DOCKER_TAG>
 					}
 				}
 			}
