@@ -7,17 +7,17 @@ pipeline {
 				checkout scm
 			}
 		}
-		stage('Compilar y Publicar Docker') {
-			agent {
-				label 'dynamic-slave'
-			}
-			steps {
-				script {
-					def chart = readYaml file: 'chart/expressjs/Chart.yaml'
-					sh "docker build -t snahider/expressjs:${chart.version} ."
-				}
-			}
-		}
+		// stage('Compilar y Publicar Docker') {
+		// 	agent {
+		// 		label 'dynamic-slave'
+		// 	}
+		// 	steps {
+		// 		script {
+		// 			def chart = readYaml file: 'chart/expressjs/Chart.yaml'
+		// 			sh "docker build -t snahider/expressjs:${chart.version} ."
+		// 		}
+		// 	}
+		// }
 		// stage('Publicar Helm') {
 		// 	agent any
 		// 	steps {
