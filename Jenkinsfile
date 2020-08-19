@@ -1,5 +1,8 @@
 pipeline {
 	agent any
+	options {
+		skipDefaultCheckout(true)
+	}
 	stages {
 		stage('Descargar Fuentes') {
 			steps {
@@ -8,18 +11,19 @@ pipeline {
 		}
 		stage('Compilar y Publicar Docker') {
 			steps {
-				script {
-					def chart = readYaml file: 'chart/expressjs/Chart.yaml'
-					sh "docker build -t snahider/expressjs:${chart.version} ."
+				container('docker') {
+					script {
+						def chart = readYaml file: 'chart/expressjs/Chart.yaml'
+						sh "docker build -t snahider/expressjs:${chart.version} ."
+					}
 				}
 			}
 		}
-		// stage('Publicar Helm') {
-		// 	agent any
-		// 	steps {
-		// 		echo 'Publicar helm'
-		// 	}
-		// }
+		stage('Publicar Helm') {
+			steps {
+				echo 'Publicar helm'
+			}
+		}
 		// stage('Desplegar a Integracion') {
 		// 	agent any
 		// 	steps {
