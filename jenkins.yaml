@@ -67,15 +67,12 @@ jenkins:
         label: "jenkins-jenkins-slave "
         name: "default"
         nodeUsageMode: "NORMAL"
-        podRetention: "never"
+        podRetention: "onFailure"
         serviceAccount: "default"
         volumes:
         - hostPathVolume:
             hostPath: "/var/run/docker.sock"
             mountPath: "/var/run/docker.sock"
-        - hostPathVolume:
-            hostPath: "/usr/local/bin/helm"
-            mountPath: "/usr/local/bin/helm"
         yamlMergeStrategy: "override"
   crumbIssuer:
     standard:
@@ -119,6 +116,8 @@ unclassified:
   buildDiscarders:
     configuredBuildDiscarders:
     - "jobBuildDiscarder"
+  casCGlobalConfig:
+    configurationPath: "https://raw.githubusercontent.com/snahider/expressjs-k8s/master/jenkins.yaml"
   defaultFolderConfiguration:
     healthMetrics:
     - worstChildHealthMetric:
