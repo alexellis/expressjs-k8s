@@ -1,5 +1,5 @@
 pipeline {
-	agent none
+	agent any
 	stages {
 		stage('Descargar Fuentes') {
 			steps {
@@ -7,7 +7,6 @@ pipeline {
 			}
 		}
 		stage('Compilar y Publicar Docker') {
-			agent any
 			steps {
 				script {
 					def chart = readYaml file: 'chart/expressjs/Chart.yaml'
