@@ -30,6 +30,7 @@ pipeline {
 			}
 		}
 		stage('Publicar Helm') {
+			agent any
 			steps {
 				container('helm') {
 					sh "helm package chart/${COMPONENT_NAME}"
