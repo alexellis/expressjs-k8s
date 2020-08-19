@@ -8,7 +8,9 @@ pipeline {
 			}
 		}
 		stage('Compilar y Publicar Docker') {
-			agent 'dynamic-slave'
+			agent {
+				label 'dynamic-slave'
+			}
 			steps {
 				script {
 					def chart = readYaml file: 'chart/expressjs/Chart.yaml'
