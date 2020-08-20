@@ -72,6 +72,7 @@ pipeline {
 							script {
 								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {									
 									unstash 'Chart.yaml'
+									sh 'ls'
 									def chart = readYaml file: 'Chart.yaml'
 									sh "helm repo add artifactory https://angelnunez.jfrog.io/artifactory/helm --username ${USERNAME} --password ${PASSWORD}"
 									sh "helm install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version ${chart.version}"
