@@ -74,7 +74,7 @@ pipeline {
 									unstash 'Chart.yaml'
 									def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
 									sh "helm repo add artifactory https://angelnunez.jfrog.io/artifactory/helm --username ${USERNAME} --password ${PASSWORD}"
-									sh "helm install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version ${chart.version}"
+									sh "helm upgrade --install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version ${chart.version}"
 								}
 							}					
 						}
