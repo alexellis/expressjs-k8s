@@ -1,4 +1,6 @@
 replicaCount: 1
 
 image:
-    repository: snahider/expressjs
+    repository: angelnunez-docker.jfrog.io/expressjs
+
+imagePullSecrets: regcred

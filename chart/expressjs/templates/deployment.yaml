@@ -14,6 +14,10 @@ spec:
       labels:
         {{- include "expressjs.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+      - name: {{toYaml .}}
+      {{- end }}
       containers:
       - name: expressjs
         image: "{{.Values.image.repository}}:{{.Chart.AppVersion}}"

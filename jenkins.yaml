@@ -80,7 +80,7 @@ jenkins:
         name: "default"
         nodeUsageMode: NORMAL
         podRetention: "onFailure"
-        serviceAccount: "default"
+        serviceAccount: "jenkins"
         volumes:
         - hostPathVolume:
             hostPath: "/var/run/docker.sock"

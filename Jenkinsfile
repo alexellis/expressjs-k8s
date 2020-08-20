@@ -20,7 +20,7 @@ pipeline {
 						container('docker') {
 							script {
 								def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
-								env.REPOSITORY_URI="angelnunez-docker-local.jfrog.io/${COMPONENT_NAME}"
+								env.REPOSITORY_URI="	/${COMPONENT_NAME}"
 								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 									sh "docker login angelnunez-docker-local.jfrog.io --username='${USERNAME}' --password='${PASSWORD}'"
 									sh "docker build -t ${REPOSITORY_URI}:${chart.version} ."
