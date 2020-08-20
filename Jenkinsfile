@@ -5,6 +5,8 @@ pipeline {
 	}
 	environment{
 		COMPONENT_NAME='expressjs'
+		DOCKER_REGISTRY="angelnunez-docker-local.jfrog.io"
+		DOCKER_IMAGE="${DOCKER_REGISTRY}/${COMPONENT_NAME}"
 	}
 	stages {
 		stage('Build Stages'){
@@ -20,11 +22,10 @@ pipeline {
 						container('docker') {
 							script {
 								def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
-								env.REPOSITORY_URI="	/${COMPONENT_NAME}"
 								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-									sh "docker login angelnunez-docker-local.jfrog.io --username='${USERNAME}' --password='${PASSWORD}'"
-									sh "docker build -t ${REPOSITORY_URI}:${chart.version} ."
-									sh "docker push ${REPOSITORY_URI}:${chart.version}"
+									sh "docker login ${DOCKER_REGISTRY} --username='${USERNAME}' --password='${PASSWORD}'"
+									sh "docker build -t ${DOCKER_IMAGE}:${chart.version} ."
+									sh "docker push ${DOCKER_IMAGE}:${chart.version}"
 								}
 							}
 						}
@@ -71,8 +72,7 @@ pipeline {
 								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 									//def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
 									sh "helm repo add artifactory https://angelnunez.jfrog.io/artifactory/helm --username ${USERNAME} --password ${PASSWORD}"
-									//sh "helm repo update"
-									sh "helm install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version 5.0"
+									sh "helm install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version 6.0"
 								}
 							}					
 						}
