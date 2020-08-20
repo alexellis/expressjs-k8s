@@ -15,6 +15,7 @@ pipeline {
 				stage('Checkout Code') {
 					steps {
 						checkout scm
+						stash includes: 'chart/${COMPONENT_NAME}/Chart.yaml', name: 'Chart.yaml'
 					}
 				}
 				stage('Generate and Publish Docker Image') {
@@ -69,10 +70,11 @@ pipeline {
 					steps {
 						container('helm') {
 							script {
-								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-									//def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
+								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {									
+									unstash 'Chart.yaml'
+									def chart = readYaml file: 'Chart.yaml'
 									sh "helm repo add artifactory https://angelnunez.jfrog.io/artifactory/helm --username ${USERNAME} --password ${PASSWORD}"
-									sh "helm install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version 6.0"
+									sh "helm install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version ${chart.version}"
 								}
 							}					
 						}
@@ -80,27 +82,5 @@ pipeline {
 				}
 			}
 		}
-
-		// stage('Promocionar a Calidad') {
-		// 	when {
-		// 		expression {
-		// 			timeout(time: 3, unit: 'DAYS') {
-		// 				input message: 'Promocionar a Calidad?'
-		// 				return true
-		// 			}
-		// 		}
-		// 		beforeAgent true
-		// 	}
-		// 	agent any
-		// 	steps {
-		// 		echo 'Promocionando'
-		// 	}
-		// }
-		// stage('Desplegar a Calidad') {
-		// 	agent any
-		// 	steps {
-		// 		sh 'helm upgrade --install expressjs --namespace calidad -f ./chart/expressjs/values-calidad.yaml ./chart/expressjs'
-		// 	}
-		// }
 	}
 }
