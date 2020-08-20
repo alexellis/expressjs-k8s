@@ -15,7 +15,7 @@ pipeline {
 				stage('Checkout Code') {
 					steps {
 						checkout scm
-						stash includes: 'chart/${COMPONENT_NAME}/Chart.yaml', name: 'Chart.yaml'
+						stash includes: "chart/${COMPONENT_NAME}/Chart.yaml", name: 'Chart.yaml'
 					}
 				}
 				stage('Generate and Publish Docker Image') {
