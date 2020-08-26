@@ -73,7 +73,7 @@ pipeline {
 								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 									unstash 'Chart.yaml'
 									def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
-									sh "curl -i -u ${USERNAME}:${PASSWORD} -X POST 'http://angelnunez.jfrog.io/api/docker/${DOCKER_DEV_REPOSITORY}/v2/promote' -H 'Content-Type: application/json' -d '{\"targetRepo\":\"${DOCKER_INTEGRACION_REPOSITORY}\",\"dockerRepository\":\"${COMPONENT_NAME}\",\"tag\":\"${chart.version}\"}'"
+									sh "curl -i -u ${USERNAME}:${PASSWORD} -X POST 'https://angelnunez.jfrog.io/artifactory/api/docker/${DOCKER_DEV_REPOSITORY}/v2/promote' -H 'Content-Type: application/json' -d '{\"targetRepo\":\"${DOCKER_INTEGRACION_REPOSITORY}\",\"dockerRepository\":\"${COMPONENT_NAME}\",\"tag\":\"${chart.version}\"}'"
 								}
 							}
 						}
@@ -87,7 +87,8 @@ pipeline {
 									unstash 'Chart.yaml'
 									def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
 									sh "helm repo add artifactory https://angelnunez.jfrog.io/artifactory/helm --username ${USERNAME} --password ${PASSWORD}"
-									sh "helm upgrade --install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version ${chart.version} -f env/value-integracion.yml"
+									sh "helm pull artifactory/${COMPONENT_NAME} --version ${chart.version} --untar"
+									sh "helm upgrade --install ${COMPONENT_NAME} ./${COMPONENT_NAME} -f ./${COMPONENT_NAME}/env/value-integracion.yml"
 								}
 							}					
 						}
