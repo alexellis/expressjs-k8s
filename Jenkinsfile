@@ -5,8 +5,13 @@ pipeline {
 	}
 	environment{
 		COMPONENT_NAME='expressjs'
-		DOCKER_REGISTRY="angelnunez-docker-local.jfrog.io"
-		DOCKER_IMAGE="${DOCKER_REGISTRY}/${COMPONENT_NAME}"
+		HELM_DEV_REPOSITORY="helm-local"
+		DOCKER_DEV_REPOSITORY="docker-local"
+		DOCKER_DEV_REGISTRY="angelnunez-${DOCKER_DEV_REPOSITORY}.jfrog.io"
+		DOCKER_DEV_IMAGE="${DOCKER_DEV_REGISTRY}/${COMPONENT_NAME}"
+		DOCKER_INTEGRACION_REPOSITORY="docker-integracion-local"
+		DOCKER_INTEGRACION_REGISTRY="angelnunez-${DOCKER_INTEGRACION_REPOSITORY}.jfrog.io"
+		
 	}
 	stages {
 		stage('Build Stages'){
@@ -24,9 +29,9 @@ pipeline {
 							script {
 								def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
 								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-									sh "docker login ${DOCKER_REGISTRY} --username='${USERNAME}' --password='${PASSWORD}'"
-									sh "docker build -t ${DOCKER_IMAGE}:${chart.version} ."
-									sh "docker push ${DOCKER_IMAGE}:${chart.version}"
+									sh "docker login ${DOCKER_DEV_REGISTRY} --username='${USERNAME}' --password='${PASSWORD}'"
+									sh "docker build -t ${DOCKER_DEV_IMAGE}:${chart.version} ."
+									sh "docker push ${DOCKER_DEV_IMAGE}:${chart.version}"
 								}
 							}
 						}
@@ -41,7 +46,7 @@ pipeline {
 							script {
 								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 									def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
-									sh "curl -u ${USERNAME}:${PASSWORD} -T ${COMPONENT_NAME}-${chart.version}.tgz 'https://angelnunez.jfrog.io/artifactory/helm-local/${COMPONENT_NAME}-${chart.version}.tgz'"
+									sh "curl -u ${USERNAME}:${PASSWORD} -T ${COMPONENT_NAME}-${chart.version}.tgz 'https://angelnunez.jfrog.io/artifactory/${HELM_DEV_REPOSITORY}/${COMPONENT_NAME}-${chart.version}.tgz'"
 								}
 							}					
 						}				
@@ -63,7 +68,15 @@ pipeline {
 			stages{
 				stage('Promocionar a Integración') {
 					steps {
-						echo 'Promocionando'
+						container('curl') {
+							script{
+								withCredentials([usernamePassword(credentialsId: 'artifactorycloud', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+									unstash 'Chart.yaml'
+									def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
+									sh "curl -i -u ${USERNAME}:${PASSWORD} -X POST 'http://angelnunez.jfrog.io/api/docker/${DOCKER_DEV_REPOSITORY}/v2/promote' -H 'Content-Type: application/json' -d '{\"targetRepo\":\"${DOCKER_INTEGRACION_REPOSITORY}\",\"dockerRepository\":\"${COMPONENT_NAME}\",\"tag\":\"${chart.version}\"}'"
+								}
+							}
+						}
 					}
 				}
 				stage('Desplegar a Integracion') {
@@ -74,7 +87,7 @@ pipeline {
 									unstash 'Chart.yaml'
 									def chart = readYaml file: "chart/${COMPONENT_NAME}/Chart.yaml"
 									sh "helm repo add artifactory https://angelnunez.jfrog.io/artifactory/helm --username ${USERNAME} --password ${PASSWORD}"
-									sh "helm upgrade --install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version ${chart.version}"
+									sh "helm upgrade --install ${COMPONENT_NAME} artifactory/${COMPONENT_NAME} --version ${chart.version} -f env/value-integracion.yml"
 								}
 							}					
 						}

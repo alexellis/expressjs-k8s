@@ -18,3 +18,7 @@ kubectl create clusterrolebinding jenkins-cluster-admin --clusterrole=cluster-ad
 ```sh
 kubectl create secret docker-registry regcred --docker-server=<REGISTRY> --docker-username=<USERNAME> --docker-password=<PASSWORD> --docker-email=<EMAIL>
 ```
+
+```sh
+gcloud container clusters resize helm-microservices-cluster --num-nodes=1 --zone=us-central1-c
+```
