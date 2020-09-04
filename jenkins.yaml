@@ -138,6 +138,19 @@ unclassified:
     createAccountBasedOnEmail: false
     showEntireCommitSummaryInChanges: false
     useExistingAccountWithSameEmail: false
+  globalLibraries:
+    libraries:
+    - defaultVersion: "master"
+      implicit: true
+      name: "default_library"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              id: "ccfeb859-2ac8-49eb-a387-f8cb5dc6526c"
+              remote: "https://github.com/snahider/sn-jenkins-shared-libraries.git "
+              traits:
+              - "gitBranchDiscovery"
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
     url: "http://jenkins:8080/"

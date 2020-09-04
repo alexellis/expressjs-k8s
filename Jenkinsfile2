@@ -1,0 +1,63 @@
+pipeline {
+	agent none
+	options {
+		skipDefaultCheckout(true)
+	}
+	environment{
+		ARTIFACTORY_URL='https://angelnunez.jfrog.io/artifactory'
+		COMPONENT_NAME='expressjs'
+		HELM_DEV_REPOSITORY="helm-local"
+		DOCKER_DEV_REPOSITORY="docker-local"
+		DOCKER_DEV_REGISTRY="angelnunez-${DOCKER_DEV_REPOSITORY}.jfrog.io"
+		DOCKER_DEV_IMAGE="${DOCKER_DEV_REGISTRY}/${COMPONENT_NAME}"
+		DOCKER_INTEGRACION_REPOSITORY="docker-integracion-local"
+		DOCKER_INTEGRACION_REGISTRY="angelnunez-${DOCKER_INTEGRACION_REPOSITORY}.jfrog.io"
+	}
+	stages {
+		stage('Build Stages'){
+			agent any
+			stages{
+				stage('Checkout Code') {
+					steps {
+						checkout scm
+						stash includes: "chart/${COMPONENT_NAME}/Chart.yaml", name: 'Chart.yaml'
+					}
+				}
+				stage('Generate and Publish Docker Image') {
+					steps {
+						buildAndPushDocker()
+					}
+				}
+				stage('Generate and Publish Helm Chart') {
+					steps {
+						buildAndPushHelm()
+					}
+				}
+			}
+		}
+		stage('Integration Stages'){
+			when {
+				expression {
+					timeout(time: 3, unit: 'DAYS') {
+						input message: 'Promocionar a Integración?'
+						return true
+					}
+				}
+				beforeAgent true
+			}
+			agent any
+			stages{
+				stage('Promocionar a Integración') {
+					steps {
+						promoteDocker()
+					}
+				}
+				stage('Desplegar a Integracion') {
+					steps {
+						upgradeHelm()
+					}
+				}
+			}
+		}
+	}
+}
