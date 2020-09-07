@@ -127,11 +127,8 @@ security:
   scriptApproval:
     approvedSignatures:
     - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy\
-      \ getRoleMaps"
-    - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy\
       \ getSIDs java.lang.String"
     - "method jenkins.model.Jenkins getAuthorizationStrategy"
-    - "method jenkins.model.Jenkins getUser java.lang.String"
     - "staticMethod jenkins.model.Jenkins getInstance"
 unclassified:
   buildDiscarders:
