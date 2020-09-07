@@ -13,42 +13,8 @@ jenkins:
   - "JNLP4-connect"
   - "Ping"
   authorizationStrategy:
-    roleBased:
-      roles:
-        global: |-
-          FAILED TO EXPORT
-          org.jenkinsci.plugins.rolestrategy.casc.GrantedRoles#global: java.lang.NullPointerException
-            at java.util.regex.Matcher.getTextLength(Matcher.java:1283)
-            at java.util.regex.Matcher.reset(Matcher.java:309)
-            at java.util.regex.Matcher.<init>(Matcher.java:229)
-            at java.util.regex.Pattern.matcher(Pattern.java:1093)
-            at org.jenkinsci.plugins.rolestrategy.casc.PermissionFinder.findPermissionId(PermissionFinder.java:42)
-            at org.jenkinsci.plugins.rolestrategy.casc.RoleDefinition.getRole(RoleDefinition.java:48)
-            at org.jenkinsci.plugins.rolestrategy.casc.RoleDefinition.<init>(RoleDefinition.java:41)
-          Caused: java.lang.reflect.InvocationTargetException
-            at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-            at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-            at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-            at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-            at io.jenkins.plugins.casc.impl.configurators.DataBoundConfigurator.describe(DataBoundConfigurator.java:309)
-            at io.jenkins.plugins.casc.Attribute._describe(Attribute.java:329)
-            at io.jenkins.plugins.casc.Attribute.describe(Attribute.java:258)
-            at io.jenkins.plugins.casc.impl.configurators.DataBoundConfigurator.describe(DataBoundConfigurator.java:317)
-            at io.jenkins.plugins.casc.Attribute._describe(Attribute.java:329)
-            at io.jenkins.plugins.casc.Attribute.describe(Attribute.java:265)
-            at io.jenkins.plugins.casc.BaseConfigurator.compare(BaseConfigurator.java:391)
-            at org.jenkinsci.plugins.rolestrategy.casc.RoleBasedAuthorizationStrategyConfigurator.describe(RoleBasedAuthorizationStrategyConfigurator.java:94)
-            at org.jenkinsci.plugins.rolestrategy.casc.RoleBasedAuthorizationStrategyConfigurator.describe(RoleBasedAuthorizationStrategyConfigurator.java:34)
-            at io.jenkins.plugins.casc.impl.configurators.HeteroDescribableConfigurator.lambda$convertToNode$de0cd4f8$1(HeteroDescribableConfigurator.java:282)
-            at io.vavr.CheckedFunction0.lambda$unchecked$52349c75$1(CheckedFunction0.java:247)
-            at io.jenkins.plugins.casc.impl.configurators.HeteroDescribableConfigurator.convertToNode(HeteroDescribableConfigurator.java:282)
-            at io.jenkins.plugins.casc.impl.configurators.HeteroDescribableConfigurator.lambda$describe$5(HeteroDescribableConfigurator.java:107)
-            at io.vavr.control.Option.map(Option.java:392)
-            at io.jenkins.plugins.casc.impl.configurators.HeteroDescribableConfigurator.describe(HeteroDescribableConfigurator.java:107)
-            at io.jenkins.plugins.casc.impl.configurators.HeteroDescribableConfigurator.describe(HeteroDescribableConfigurator.java:55)
-            at io.jenkins.plugins.casc.Attribute._describe(Attribute.java:329)
-            at io.jenkins.plugins.casc.Attribute.describe(Attribute.java:265)
-            at io.jenkins.plugins.casc.Configurator.describe(Configurator.java:182)
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
   clouds:
   - kubernetes:
       containerCap: 10
@@ -112,7 +78,7 @@ jenkins:
         hostNetwork: false
         label: "jenkins-jenkins-slave "
         name: "default"
-        nodeUsageMode: "NORMAL"
+        nodeUsageMode: NORMAL
         podRetention: "onFailure"
         serviceAccount: "jenkins"
         volumes:
@@ -141,41 +107,7 @@ jenkins:
   remotingSecurity:
     enabled: true
   scmCheckoutRetryCount: 0
-  securityRealm:
-    local:
-      allowsSignup: false
-      enableCaptcha: false
-      users:
-      - id: "admin"
-        name: "Admin"
-        properties:
-        - "apiToken"
-        - "myView"
-        - preferredProvider:
-            providerId: "default"
-        - "timezone"
-        - mailer:
-            emailAddress: "admin@jenkins.com"
-      - id: "carlos_luna"
-        name: "Carlos Luna"
-        properties:
-        - "apiToken"
-        - "myView"
-        - preferredProvider:
-            providerId: "default"
-        - "timezone"
-        - mailer:
-            emailAddress: "carlos_luna@gmail.com"
-      - id: "juan_perez"
-        name: "Juan Perez"
-        properties:
-        - "apiToken"
-        - "myView"
-        - preferredProvider:
-            providerId: "default"
-        - "timezone"
-        - mailer:
-            emailAddress: "juan_perez@gmail.com"
+  securityRealm: "legacy"
   slaveAgentPort: 50000
   updateCenter:
     sites:
@@ -195,8 +127,11 @@ security:
   scriptApproval:
     approvedSignatures:
     - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy\
+      \ getRoleMaps"
+    - "method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy\
       \ getSIDs java.lang.String"
     - "method jenkins.model.Jenkins getAuthorizationStrategy"
+    - "method jenkins.model.Jenkins getUser java.lang.String"
     - "staticMethod jenkins.model.Jenkins getInstance"
 unclassified:
   buildDiscarders:
