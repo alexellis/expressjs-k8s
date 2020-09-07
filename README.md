@@ -7,6 +7,10 @@
 ## Commands For Non Production Setup
 
 ```sh
+helm upgrade jenkins jenkinsci/jenkins --set-string master.sidecars.autoConfigReload.enabled=false
+```
+
+```sh
 printf $(kubectl get secret --namespace default jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
 ```
 
