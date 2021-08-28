@@ -86,11 +86,14 @@ jobs:
       - name: Checkout (Latest)
         uses: actions/checkout@v2
         if: github.event.inputs.full-sha == ''
+        with:
+          fetch-depth: 100
       - name: Checkout (Custom Ref)
         uses: actions/checkout@v2
         if: github.event.inputs.full-sha != ''
         with:
           ref: ${{ github.event.inputs.full-sha }}
+          fetch-depth: 100
       - name: Create tag
         uses: actions/github-script@v4.1.0
         with:
