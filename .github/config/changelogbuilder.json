@@ -1,5 +1,6 @@
 {
-    "tag_resolver": {
-        "method": "sort"
-    }
+  "max_tags_to_fetch": 100,
+  "tag_resolver": {
+    "method": "sort"
+  }
 }
