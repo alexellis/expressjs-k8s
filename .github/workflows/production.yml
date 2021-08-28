@@ -58,26 +58,26 @@ jobs:
     steps:
       - run: |
           echo "Verify =)"
-  create-release-branch:
-    if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    needs: 
-      - prepare
-      - verify-deployment
-    steps:
-      - name: Checkout (Latest)
-        uses: actions/checkout@v2
-        if: github.event.inputs.full-sha == ''
-      - name: Checkout (Custom Ref)
-        uses: actions/checkout@v2
-        if: github.event.inputs.full-sha != ''
-        with:
-          ref: ${{ github.event.inputs.full-sha }}
-      - name: Create Release Branch
-        run: |
-          git checkout -b release/${{needs.prepare.outputs.RELEASE_VERSION}}
-          git push origin release/${{needs.prepare.outputs.RELEASE_VERSION}}
-  release:
+  # create-release-branch:
+  #   if: github.ref == 'refs/heads/master'
+  #   runs-on: ubuntu-latest
+  #   needs: 
+  #     - prepare
+  #     - verify-deployment
+  #   steps:
+  #     - name: Checkout (Latest)
+  #       uses: actions/checkout@v2
+  #       if: github.event.inputs.full-sha == ''
+  #     - name: Checkout (Custom Ref)
+  #       uses: actions/checkout@v2
+  #       if: github.event.inputs.full-sha != ''
+  #       with:
+  #         ref: ${{ github.event.inputs.full-sha }}
+  #     - name: Create Release Branch
+  #       run: |
+  #         git checkout -b release/${{needs.prepare.outputs.RELEASE_VERSION}}
+  #         git push origin release/${{needs.prepare.outputs.RELEASE_VERSION}}
+  create-github-release:
     runs-on: ubuntu-latest
     needs:
       - prepare
@@ -92,7 +92,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "refs/tags/${{needs.prepare.outputs.RELEASE_VERSION}}",
-              sha: ${{ github.event.inputs.full-sha == '' && github.sha || github.event.inputs.full-sha }}
+              sha: "${{ github.event.inputs.full-sha == '' && github.sha || github.event.inputs.full-sha }}""
             })
       - name: Build Changelog
         id: change-log
