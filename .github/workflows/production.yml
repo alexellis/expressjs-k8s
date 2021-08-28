@@ -118,10 +118,9 @@ jobs:
       - name: Build Changelog
         id: change-log
         uses: mikepenz/release-changelog-builder-action@v2.4.0
-        env:
+        with:
           configuration: ".github/config/changelogbuilder.json"
-          # toTag: ${{steps.var-tag-name.outputs.TAG_NAME}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Release
         uses: actions/create-release@v1
         with:
