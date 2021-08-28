@@ -12,7 +12,7 @@ jobs:
       APPLICATION: ${{ steps.var-application.outputs.APPLICATION }}
       SHA_SHORT: ${{ steps.var-sha-short.outputs.SHA_SHORT }}
       IMAGE_TAG: ${{ steps.docker-vars.outputs.IMAGE_TAG }}
-      RELEASE_VERSION: ${{ steps.docker-vars.outputs.IMAGE_TAG }}
+      RELEASE_VERSION: ${{ steps.release-version.outputs.RELEASE_VERSION }}
     steps:
       - name: Variable SHA_SHORT
         id: var-sha-short
@@ -27,7 +27,7 @@ jobs:
         run: |
           echo ::set-output name=IMAGE_TAG::ghcr.io/${{github.repository_owner}}/${{steps.var-application.outputs.APPLICATION}}:${{steps.var-sha-short.outputs.SHA_SHORT}}
       - name: Variable RELEASE_VERSION
-        id: release-branch-name
+        id: release-version
         run: |
           echo ::set-output name=RELEASE_VERSION::$(date +'%Y-%m-%d')
   checkout:
