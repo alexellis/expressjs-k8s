@@ -113,11 +113,13 @@ jobs:
         run: |
           git fetch --unshallow --tags
           git tag --list 
+      - run: |
+          cat .github/config/changelogbuilder.json
       - name: Build Changelog
         id: change-log
         uses: mikepenz/release-changelog-builder-action@v1
         env:
-          configuration: "kjjkjlkj.json"
+          configuration: ".github/config/changelogbuilder.json"
           toTag: ${{steps.var-tag-name.outputs.TAG_NAME}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Release
