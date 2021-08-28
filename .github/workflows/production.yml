@@ -12,7 +12,7 @@ jobs:
       APPLICATION: ${{ steps.var-application.outputs.APPLICATION }}
       SHA_SHORT: ${{ steps.var-sha-short.outputs.SHA_SHORT }}
       IMAGE_TAG: ${{ steps.docker-vars.outputs.IMAGE_TAG }}
-      RELEASE_VERSION: ${{ steps.release-version.outputs.RELEASE_VERSION }}
+      RELEASE_VERSION: ${{ steps.var-release-version.outputs.RELEASE_VERSION }}
     steps:
       - name: Variable SHA_SHORT
         id: var-sha-short
@@ -27,7 +27,7 @@ jobs:
         run: |
           echo ::set-output name=IMAGE_TAG::ghcr.io/${{github.repository_owner}}/${{steps.var-application.outputs.APPLICATION}}:${{steps.var-sha-short.outputs.SHA_SHORT}}
       - name: Variable RELEASE_VERSION
-        id: release-version
+        id: var-release-version
         run: |
           echo ::set-output name=RELEASE_VERSION::$(date +'%Y-%m-%d')-2
   checkout:
@@ -84,7 +84,7 @@ jobs:
       - verify-deployment
     steps:
       - name: Variable TAG_NAME
-        id: release-version
+        id: var-tag-name
         run: |
           echo ::set-output name=TAG_NAME::v${{needs.prepare.outputs.RELEASE_VERSION}}
       - name: Checkout (Latest)
@@ -106,20 +106,20 @@ jobs:
             github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/tags/${{steps.var-application.outputs.TAG_NAME}}",
+              ref: "refs/tags/${{steps.var-tag-name.outputs.TAG_NAME}}",
               sha: "${{ github.event.inputs.full-sha == '' && github.sha || github.event.inputs.full-sha }}"
             })
       - name: Build Changelog
         id: change-log
         uses: mikepenz/release-changelog-builder-action@v1
         env:
-          toTag: ${{steps.var-application.outputs.TAG_NAME}}
+          toTag: ${{steps.var-tag-name.outputs.TAG_NAME}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{steps.var-application.outputs.TAG_NAME}}
-          release_name: ${{steps.var-application.outputs.TAG_NAME}}
+          tag_name: ${{steps.var-tag-name.outputs.TAG_NAME}}
+          release_name: ${{steps.var-tag-name.outputs.TAG_NAME}}
           body: ${{steps.change-log.outputs.changelog}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
