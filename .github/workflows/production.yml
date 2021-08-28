@@ -97,7 +97,7 @@ jobs:
         if: github.event.inputs.full-sha != ''
         with:
           ref: ${{ github.event.inputs.full-sha }}
-          fetch-depth: 100
+          fetch-depth: 100 
       - name: Create tag
         uses: actions/github-script@v4.1.0
         with:
@@ -109,6 +109,10 @@ jobs:
               ref: "refs/tags/${{steps.var-tag-name.outputs.TAG_NAME}}",
               sha: "${{ github.event.inputs.full-sha == '' && github.sha || github.event.inputs.full-sha }}"
             })
+      - name: Fetch tags to Build ChangeLog
+        run: |
+          git fetch --unshallow --tags
+          git tag --list 
       - name: Build Changelog
         id: change-log
         uses: mikepenz/release-changelog-builder-action@v1
