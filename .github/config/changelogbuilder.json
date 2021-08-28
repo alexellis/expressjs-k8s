@@ -1,6 +1,6 @@
 {
-  "max_tags_to_fetch": 100,
+  "max_tags_to_fetch": 10,
   "tag_resolver": {
     "method": "sort"
-  },asd fsad,asf
+  }
 }
