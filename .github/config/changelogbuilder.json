@@ -1,4 +1,23 @@
 {
+  "categories": [
+    {
+      "title": "## 🚀 Features",
+      "labels": ["Feature", "feat"]
+    },
+    {
+      "title": "## 🐛 Fixes",
+      "labels": ["Hotfix","fix"]
+    }
+  ],
+  "template": "${{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n${{UNCATEGORIZED}}\n</details>",
+  "label_extractor": [
+    {
+      "pattern": "[^:]*",
+      "on_property": "title",
+      "target": "$1",
+      "method": "match"
+    }
+  ],
   "max_tags_to_fetch": 10,
   "tag_resolver": {
     "method": "sort"
