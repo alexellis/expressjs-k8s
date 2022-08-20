@@ -50,6 +50,10 @@ module.exports = {
                     "url": "https://blog.alexellis.io"
                 },
                 {
+                    "name": "ebooks",
+                    "url": "https://store.openfaas.com"
+                },
+                {
                     "name": "sponsors",
                     "url": "https://github.com/users/alexellis/sponsorship"
                 },

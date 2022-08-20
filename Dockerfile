@@ -1,13 +1,16 @@
-FROM node:10.12.0-alpine as ship
-
 # Copyright (c) Alex Ellis 2019. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-RUN addgroup -S app && adduser -S -g app app
+FROM --platform=${TARGETPLATFORM:-linux/amd64} node:17-alpine as ship
 
-RUN apk --no-cache add ca-certificates
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
 
-WORKDIR /root/
+RUN addgroup -S app && \
+    adduser -S -g app app && \
+    apk --no-cache add ca-certificates
 
 # Turn down the verbosity to default level.
 ENV NPM_CONFIG_LOGLEVEL warn
@@ -33,7 +36,5 @@ RUN chown app:app -R /home/app \
     && chmod 777 /tmp
 
 USER app
-
-RUN touch /tmp/.lock
 
 CMD ["node", "index.js"]
