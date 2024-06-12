@@ -5,7 +5,7 @@ functions:
   expressjs:
     lang: dockerfile
     handler: ./
-    image: alexellis2/service:0.4.1
+    image: alexellis2/service:0.4.2
     annotations:
       com.openfaas.health.http.path: "/health"
     requests:
@@ -15,4 +15,4 @@ functions:
       cpu: 50m
       memory: 128Mi
 
-# faas-cli publish  --platforms linux/amd64,linux/arm64,linux/arm/7
+# faas-cli publish --platforms linux/amd64,linux/arm64,linux/arm/7
