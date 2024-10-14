@@ -2,20 +2,40 @@
 
 Example to show how to build a microservice with Node.js and Express.js with instructions for: Kubernetes with YAML, [OpenFaaS](https://github.com/openfaas/faas), Docker and running locally with `node`
 
-## Clone the repository
-
-```
-git clone https://github.com/alexellis/expressjs-docker \
-&& cd expressjs-docker
-```
-
 ## Endpoints
 
 * `/` - serves a HTML page
 * `/links` - serves a JSON response of links
 * `/health` - serves a health endpoint giving 200 OK
 
-## Try it with Kubernetes
+## Clone the repository
+
+```bash
+git clone https://github.com/alexellis/expressjs-docker --depth=1 \
+  && cd expressjs-docker
+```
+
+## Install via Helm
+
+First install [Helm](https://helm.sh) via `arkade get helm`, or the Helm installation instructions.
+
+For the published chart use:
+
+```bash
+helm repo add expressjs-k8s https://alexellis.github.io/expressjs-k8s/
+
+helm repo update
+
+helm upgrade --install expressjs-k8s expressjs-k8s/expressjs-k8s
+```
+
+Or install via the local version, after cloning the repository:
+
+```bash
+helm upgrade --install expressjs-k8s ./chart/expressjs-k8s/
+```
+
+## Try it with plain Kubernetes YAML files
 
 You can first try running the example with Kubernetes, then try it with OpenFaaS to compare the experience. OpenFaaS also adds optional templates and an API to remove boilerplate coding: "look ma', (almost) no YAML!"
 
@@ -136,18 +156,6 @@ http_port=3000 node index.js
 Access via http://localhost:3000
 
 Clean up by hitting Control + C.
-
-## Install via Helm 3
-
-First install [Helm 3](https://helm.sh).
-
-```
-helm repo add expressjs-k8s https://alexellis.github.io/expressjs-k8s/
-
-helm repo update
-
-helm install expressjs-k8s-tester expressjs-k8s/expressjs-k8s
-```
 
 ## The parts
 

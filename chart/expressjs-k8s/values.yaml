@@ -35,8 +35,8 @@ service:
 
 ingress:
   enabled: true
+  ingressClass: nginx
   annotations:
-    kubernetes.io/ingress.class: traefik
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: expressjs.local
